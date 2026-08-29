@@ -14,46 +14,22 @@ function botar_admin_keyboard(){
     return [
         'inline_keyboard' => [
             [
-                [
-                    'text' => '📊 الإحصائيات',
-                    'callback_data' => 'botar_admin_stats'
-                ]
+                ['text' => '📊 الإحصائيات', 'callback_data' => 'botar_admin_stats']
             ],
             [
-                [
-                    'text' => '⭐ مجموعات VIP',
-                    'callback_data' => 'botar_admin_vip'
-                ],
-                [
-                    'text' => '📣 المجموعات العادية',
-                    'callback_data' => 'botar_admin_free'
-                ]
+                ['text' => '⭐ مجموعات VIP', 'callback_data' => 'botar_admin_vip'],
+                ['text' => '📣 المجموعات العادية', 'callback_data' => 'botar_admin_free']
             ],
             [
-                [
-                    'text' => '💳 إدارة الشحن',
-                    'callback_data' => 'botar_admin_charge'
-                ],
-                [
-                    'text' => '📨 رسالة جماعية',
-                    'callback_data' => 'botar_admin_broadcast'
-                ]
+                ['text' => '💳 إدارة الشحن', 'callback_data' => 'botar_admin_charge'],
+                ['text' => '📨 رسالة جماعية', 'callback_data' => 'botar_admin_broadcast']
             ],
             [
-                [
-                    'text' => '👥 مساعدو المطور',
-                    'callback_data' => 'botar_admin_helpers'
-                ],
-                [
-                    'text' => '🚫 المحظورون عام',
-                    'callback_data' => 'botar_admin_bans'
-                ]
+                ['text' => '👥 مساعدو المطور', 'callback_data' => 'botar_admin_helpers'],
+                ['text' => '🚫 المحظورون عام', 'callback_data' => 'botar_admin_bans']
             ],
             [
-                [
-                    'text' => '⚙️ إعدادات البوت',
-                    'callback_data' => 'botar_admin_settings'
-                ]
+                ['text' => '⚙️ إعدادات البوت', 'callback_data' => 'botar_admin_settings']
             ]
         ]
     ];
@@ -63,79 +39,7 @@ function botar_admin_back_keyboard(){
     return [
         'inline_keyboard' => [
             [
-                [
-                    'text' => '⬅️ رجوع',
-                    'callback_data' => 'botar_admin_home'
-                ]
-            ]
-        ]
-    ];
-}
-
-function botar_admin_broadcast_target_keyboard(){
-    return [
-        'inline_keyboard' => [
-            [
-                [
-                    'text' => '⭐ VIP',
-                    'callback_data' => 'botar_bc_target_vip'
-                ],
-                [
-                    'text' => '📣 العادية',
-                    'callback_data' => 'botar_bc_target_free'
-                ]
-            ],
-            [
-                [
-                    'text' => '👥 الخاص',
-                    'callback_data' => 'botar_bc_target_private'
-                ],
-                [
-                    'text' => '🌐 الجميع',
-                    'callback_data' => 'botar_bc_target_all'
-                ]
-            ],
-            [
-                [
-                    'text' => '⬅️ رجوع',
-                    'callback_data' => 'botar_admin_home'
-                ]
-            ]
-        ]
-    ];
-}
-
-function botar_admin_broadcast_mode_keyboard(){
-    return [
-        'inline_keyboard' => [
-            [
-                [
-                    'text' => '📤 إرسال',
-                    'callback_data' => 'botar_bc_mode_copy'
-                ],
-                [
-                    'text' => '🔁 توجيه',
-                    'callback_data' => 'botar_bc_mode_forward'
-                ]
-            ],
-            [
-                [
-                    'text' => '❌ إلغاء',
-                    'callback_data' => 'botar_bc_cancel'
-                ]
-            ]
-        ]
-    ];
-}
-
-function botar_admin_broadcast_cancel_keyboard(){
-    return [
-        'inline_keyboard' => [
-            [
-                [
-                    'text' => '❌ إلغاء النشر',
-                    'callback_data' => 'botar_bc_cancel'
-                ]
+                ['text' => '⬅️ رجوع', 'callback_data' => 'botar_admin_home']
             ]
         ]
     ];
@@ -144,9 +48,7 @@ function botar_admin_broadcast_cancel_keyboard(){
 function botar_admin_answer_callback($text = ''){
     global $updateData;
 
-    $callbackId =
-        $updateData['callback_query']['id']
-        ?? null;
+    $callbackId = $updateData['callback_query']['id'] ?? null;
 
     if (!$callbackId) {
         return;
@@ -166,16 +68,12 @@ function botar_admin_answer_callback($text = ''){
     );
 }
 
-function botar_admin_render(
-    $text,
-    $keyboard = null
-){
+function botar_admin_render($text, $keyboard = null){
     global $updateData;
 
-    $isCallback =
-        isset(
-            $updateData['callback_query']
-        );
+    $isCallback = isset(
+        $updateData['callback_query']
+    );
 
     if ($isCallback) {
 
@@ -183,8 +81,7 @@ function botar_admin_render(
             $text,
             false,
             false,
-            $keyboard
-                ?: botar_admin_back_keyboard()
+            $keyboard ?: botar_admin_back_keyboard()
         );
 
         botar_admin_answer_callback();
@@ -195,8 +92,7 @@ function botar_admin_render(
     sendMessage(
         $text,
         false,
-        $keyboard
-            ?: botar_admin_keyboard()
+        $keyboard ?: botar_admin_keyboard()
     );
 }
 
@@ -211,99 +107,18 @@ function botar_admin_home(){
 
 function botar_admin_groups(){
 
-    $groups =
-        botar_json(
-            'groups.json'
-        );
+    $groups = botar_json(
+        'groups.json'
+    );
 
     return is_array($groups)
         ? $groups
         : [];
 }
 
-/*
-|--------------------------------------------------------------------------
-| حفظ مستخدمي الخاص
-|--------------------------------------------------------------------------
-*/
-
-function botar_admin_track_private_user(){
-    global $updateData, $messageData;
-
-    if (!botar_admin_is_private()) {
-        return;
-    }
-
-    $from =
-        $updateData['callback_query']['from']
-        ??
-        ($messageData['from'] ?? null)
-        ??
-        ($updateData['message']['from'] ?? null);
-
-    if (
-        !is_array($from)
-        ||
-        !isset($from['id'])
-    ) {
-        return;
-    }
-
-    $id =
-        (string)$from['id'];
-
-    $users =
-        botar_json(
-            'users.json'
-        );
-
-    if (!is_array($users)) {
-        $users = [];
-    }
-
-    $users[$id] = [
-
-        'id' =>
-            (int)$from['id'],
-
-        'first_name' =>
-            (string)(
-                $from['first_name']
-                ?? ''
-            ),
-
-        'last_name' =>
-            (string)(
-                $from['last_name']
-                ?? ''
-            ),
-
-        'username' =>
-            (string)(
-                $from['username']
-                ?? ''
-            ),
-
-        'updated_at' =>
-            time()
-    ];
-
-    botar_json(
-        'users.json',
-        $users
-    );
-}
-
-/*
-|--------------------------------------------------------------------------
-| الإحصائيات
-|--------------------------------------------------------------------------
-*/
-
 function botar_admin_stats_text(){
 
-    $groups =
-        botar_admin_groups();
+    $groups = botar_admin_groups();
 
     $total = 0;
     $vip = 0;
@@ -334,20 +149,13 @@ function botar_admin_stats_text(){
         }
     }
 
-    $helpers =
-        botar_json(
-            'helpers.json'
-        );
+    $helpers = botar_json(
+        'helpers.json'
+    );
 
-    $bans =
-        botar_json(
-            'global_bans.json'
-        );
-
-    $users =
-        botar_json(
-            'users.json'
-        );
+    $bans = botar_json(
+        'global_bans.json'
+    );
 
     $helpersCount =
         is_array($helpers)
@@ -359,30 +167,16 @@ function botar_admin_stats_text(){
         ? count($bans)
         : 0;
 
-    $usersCount =
-        is_array($users)
-        ? count($users)
-        : 0;
-
     return
         "📊 إحصائيات BOTAR\n\n".
         "🗂 المجموعات: {$total}\n".
         "⭐ VIP: {$vip}\n".
         "📣 العادية: {$free}\n".
-        "👤 مستخدمو الخاص: {$usersCount}\n".
         "👥 مساعدو المطور: {$helpersCount}\n".
         "🚫 المحظورون عام: {$bansCount}";
 }
 
-/*
-|--------------------------------------------------------------------------
-| قوائم المجموعات
-|--------------------------------------------------------------------------
-*/
-
-function botar_admin_group_list_text(
-    $plan
-){
+function botar_admin_group_list_text($plan){
 
     $groups =
         botar_admin_groups();
@@ -454,8 +248,7 @@ function botar_admin_group_list_text(
         $shown as $index => $group
     ) {
 
-        $n =
-            $index + 1;
+        $n = $index + 1;
 
         $text .=
             "{$n}) {$group['title']}\n".
@@ -499,7 +292,9 @@ function botar_admin_helpers_text(){
 
     $i = 1;
 
-    foreach ($helpers as $helper) {
+    foreach (
+        $helpers as $helper
+    ) {
 
         $text .=
             $i.
@@ -561,222 +356,61 @@ function botar_admin_bans_text(){
     return trim($text);
 }
 
-/*
-|--------------------------------------------------------------------------
-| حالة النشر
-|--------------------------------------------------------------------------
-*/
-
-function botar_admin_broadcast_state(
-    $write = null
+function handle_admin_command(
+    $messageText
 ){
 
-    $all =
-        botar_json(
-            'broadcast_state.json'
+    $command =
+        botar_normalize_command(
+            $messageText
         );
 
-    if (!is_array($all)) {
-        $all = [];
+    if ($command !== 'admin') {
+        return false;
     }
 
-    $actor =
-        botar_actor_id();
+    if (
+        !botar_admin_is_private()
+    ) {
 
-    if ($write === null) {
-
-        return
-            $all[$actor]
-            ?? [];
-    }
-
-    if ($write === false) {
-
-        unset(
-            $all[$actor]
+        sendMessage(
+            'لوحة المطور تعمل في الخاص فقط.'
         );
 
-    } else {
-
-        $all[$actor] =
-            $write;
+        return true;
     }
 
-    botar_json(
-        'broadcast_state.json',
-        $all
-    );
+    if (
+        !botar_admin_is_developer()
+    ) {
+
+        sendMessage(
+            'ليس لديك الصلاحية لفتح لوحة المطور.'
+        );
+
+        return true;
+    }
+
+    botar_admin_home();
 
     return true;
 }
 
-/*
-|--------------------------------------------------------------------------
-| تحديد المستلمين
-|--------------------------------------------------------------------------
-*/
-
-function botar_admin_broadcast_recipients(
-    $target
+function handle_admin_callback(
+    $data
 ){
 
-    $recipients = [];
-
     if (
-        in_array(
-            $target,
-            [
-                'vip',
-                'free',
-                'all'
-            ],
-            true
-        )
-    ) {
-
-        foreach (
-            botar_admin_groups()
-            as $id => $group
-        ) {
-
-            if (
-                !is_array($group)
-                ||
-                empty($group['enabled'])
-            ) {
-                continue;
-            }
-
-            $plan =
-                $group['plan']
-                ?? 'free';
-
-            if (
-                $target !== 'all'
-                &&
-                $plan !== $target
-            ) {
-                continue;
-            }
-
-            $recipients[] =
-                (string)(
-                    $group['chat_id']
-                    ?? $id
-                );
-        }
-    }
-
-    if (
-        in_array(
-            $target,
-            [
-                'private',
-                'all'
-            ],
-            true
-        )
-    ) {
-
-        $users =
-            botar_json(
-                'users.json'
-            );
-
-        if (is_array($users)) {
-
-            foreach (
-                $users
-                as $key => $user
-            ) {
-
-                if (
-                    is_array($user)
-                ) {
-
-                    $id =
-                        $user['id']
-                        ?? $key;
-
-                } else {
-
-                    $id =
-                        is_numeric($key)
-                        ? $key
-                        : $user;
-                }
-
-                if (
-                    $id !== null
-                    &&
-                    $id !== ''
-                ) {
-
-                    $recipients[] =
-                        (string)$id;
-                }
-            }
-        }
-    }
-
-    $recipients =
-        array_values(
-            array_unique(
-                $recipients
-            )
-        );
-
-    return $recipients;
-}
-
-function botar_admin_api_ok(
-    $result
-){
-
-    if (is_array($result)) {
-
-        return
-            !empty(
-                $result['ok']
-            );
-    }
-
-    if (
-        !is_string($result)
+        !is_string($data)
         ||
-        $result === ''
+        strpos(
+            $data,
+            'botar_admin_'
+        ) !== 0
     ) {
 
         return false;
     }
-
-    $decoded =
-        json_decode(
-            $result,
-            true
-        );
-
-    return
-        is_array($decoded)
-        &&
-        !empty(
-            $decoded['ok']
-        );
-}
-
-/*
-|--------------------------------------------------------------------------
-| تنفيذ النشر بعد إرسال المطور للرسالة
-|--------------------------------------------------------------------------
-*/
-
-function botar_admin_handle_pending_broadcast(
-    $messageText = null
-){
-    global
-        $messageData,
-        $chatId,
-        $messageId;
 
     if (
         !botar_admin_is_private()
@@ -784,171 +418,107 @@ function botar_admin_handle_pending_broadcast(
         !botar_admin_is_developer()
     ) {
 
-        return false;
-    }
-
-    $state =
-        botar_admin_broadcast_state();
-
-    if (
-        !is_array($state)
-        ||
-        empty($state['target'])
-        ||
-        empty($state['mode'])
-    ) {
-
-        return false;
-    }
-
-    $command =
-        botar_normalize_command(
-            $messageText
+        botar_admin_answer_callback(
+            'ليس لديك الصلاحية'
         );
 
-    if ($command === 'admin') {
-
-        return false;
+        return true;
     }
 
-    $sourceChat =
-        $messageData['chat']['id']
-        ??
-        $chatId
-        ??
-        null;
+    switch ($data) {
 
-    $sourceMessage =
-        $messageData['message_id']
-        ??
-        $messageId
-        ??
-        null;
+        case 'botar_admin_home':
 
-    if (
-        !$sourceChat
-        ||
-        !$sourceMessage
-    ) {
+            botar_admin_home();
 
-        return false;
+            break;
+
+        case 'botar_admin_stats':
+
+            botar_admin_render(
+                botar_admin_stats_text()
+            );
+
+            break;
+
+        case 'botar_admin_vip':
+
+            botar_admin_render(
+                botar_admin_group_list_text(
+                    'vip'
+                )
+            );
+
+            break;
+
+        case 'botar_admin_free':
+
+            botar_admin_render(
+                botar_admin_group_list_text(
+                    'free'
+                )
+            );
+
+            break;
+
+        case 'botar_admin_charge':
+
+            botar_admin_render(
+                "💳 إدارة الشحن\n\n".
+                "من داخل المجموعة استخدم:\n".
+                "• شحن\n".
+                "• فحص\n".
+                "• ترقية\n".
+                "• عادية\n".
+                "• شحن مدفوع\n".
+                "• فحص مدفوعة"
+            );
+
+            break;
+
+        case 'botar_admin_broadcast':
+
+            botar_admin_render(
+                "📨 الرسالة الجماعية\n\n".
+                "سيتم ربط استقبال الرسالة وإرسالها للمجموعات في المرحلة الخاصة بالنشر العام."
+            );
+
+            break;
+
+        case 'botar_admin_helpers':
+
+            botar_admin_render(
+                botar_admin_helpers_text()
+            );
+
+            break;
+
+        case 'botar_admin_bans':
+
+            botar_admin_render(
+                botar_admin_bans_text()
+            );
+
+            break;
+
+        case 'botar_admin_settings':
+
+            botar_admin_render(
+                "⚙️ إعدادات BOTAR\n\n".
+                "💾 التخزين: JSON\n".
+                "⌨️ البادئات: /  !  #\n".
+                "✅ نظام التفعيل والشحن: مفعّل\n".
+                "🔐 لوحة المطور: خاصة بالمطور الرئيسي"
+            );
+
+            break;
+
+        default:
+
+            botar_admin_answer_callback();
+
+            break;
     }
-
-    $recipients =
-        botar_admin_broadcast_recipients(
-            $state['target']
-        );
-
-    $success = 0;
-    $failed = 0;
-
-    foreach (
-        $recipients as $recipient
-    ) {
-
-        /*
-        | لا نرسل الرسالة للمطور نفسه
-        */
-
-        if (
-            (string)$recipient
-            ===
-            (string)$sourceChat
-        ) {
-
-            continue;
-        }
-
-        /*
-        | توجيه
-        */
-
-        if (
-            $state['mode']
-            === 'forward'
-        ) {
-
-            $result =
-                sendCommand(
-                    'forwardMessage',
-                    [
-                        'chat_id' =>
-                            $recipient,
-
-                        'from_chat_id' =>
-                            $sourceChat,
-
-                        'message_id' =>
-                            $sourceMessage
-                    ]
-                );
-
-        /*
-        | إرسال نسخة
-        */
-
-        } else {
-
-            $result =
-                sendCommand(
-                    'copyMessage',
-                    [
-                        'chat_id' =>
-                            $recipient,
-
-                        'from_chat_id' =>
-                            $sourceChat,
-
-                        'message_id' =>
-                            $sourceMessage
-                    ]
-                );
-        }
-
-        if (
-            botar_admin_api_ok(
-                $result
-            )
-        ) {
-
-            $success++;
-
-        } else {
-
-            $failed++;
-        }
-
-        /*
-        | تخفيف سرعة الطلبات
-        */
-
-        usleep(
-            50000
-        );
-    }
-
-    /*
-    | إنهاء جلسة النشر
-    */
-
-    botar_admin_broadcast_state(
-        false
-    );
-
-    sendMessage(
-        "✅ انتهى النشر\n\n".
-        "تم الإرسال: {$success}\n".
-        "فشل: {$failed}",
-        false
-    );
 
     return true;
 }
-
-function botar_admin_broadcast_target_label(
-    $target
-){
-
-    $labels = [
-
-        'vip'
