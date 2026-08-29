@@ -342,5 +342,5 @@ function getUserProfilePhotos($userId, $offset = false, $limit = false)
   $data['limit'] = $limit;
  }
     $result = sendCommand('getUserProfilePhotos', $data);
-    return $result
+    return $result;
 }
