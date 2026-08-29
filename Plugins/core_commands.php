@@ -669,7 +669,26 @@ function command_start(){
 
 function handle_command($messageText){
     global $data;
+    // لوحة المطور والأزرار
+    if (
+        is_string($data ?? null)
+        &&
+        $data !== ''
+        &&
+        function_exists('handle_admin_callback')
+        &&
+        handle_admin_callback($data)
+    ) {
+        return;
+    }
 
+    if (
+        function_exists('handle_admin_command')
+        &&
+        handle_admin_command($messageText)
+    ) {
+        return;
+    }
     /*
     |--------------------------------------------------------------------------
     | أزرار الشحن
