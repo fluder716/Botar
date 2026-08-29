@@ -1,14 +1,8 @@
 <?php
-$TOKEN = ""; // bot token
-$botUsername = ""; // bot username without @
 
-/*
-$databaseHost = "localhost";
-$databaseName = ""; // db name
-$databaseUsername = ""; // db username
-$databasePassword = ""; // db password
-*/
+$TOKEN = getenv("BOT_TOKEN") ?: "";
+$botUsername = "DUBLM_BOT";
 
-$sudoID = ""; // sudo id
+$sudoID = "1673578123";
 
 date_default_timezone_set("Asia/Riyadh");
